@@ -21,7 +21,7 @@ class Bildschirm():
     def __init__(self):
         #Logodatei finden
         bildpfad = self.resource_path("Logo.png")
-        img = Image.open(bildpfad)      
+        img = Image.open(bildpfad)
 
 
 
@@ -38,14 +38,14 @@ class Bildschirm():
         self.root.rowconfigure(0, weight=1) # Die Zeilen 0
         self.root.rowconfigure(1, weight=2) # und 1 teilen sich den Platz 1 zu 2
 
-        
+
         def refresh_theme(event=None):
             self.eingabe_code_t.config(background="#191919", highlightbackground="#191919", highlightcolor="#191919")
             self.zeilenanzeige_t.config(background="#191919", foreground="#777", highlightbackground="#191919", highlightcolor="#191919")
             self.aufgabe.config(background="#222222", highlightbackground="#222222", highlightcolor="#222222", foreground="#FFFFFF")
             if globals.prüfungsmodus_an == True:
                 self.prüfungsmodus.config(background="#6F0000", highlightbackground="#6F0000", highlightcolor="#6F0000")
-        
+
         self.root.bind("<FocusIn>", refresh_theme)
 
         globals.root = self.root
@@ -56,7 +56,7 @@ class Bildschirm():
         if hasattr(sys, "_MEIPASS"):
             return os.path.join(sys._MEIPASS, rel_path)
         return os.path.join(os.path.dirname(os.path.abspath(__file__)), rel_path)
-    
+
 # ------------------------------------------------------------------------------------------------------------
     # Generieren der Ausgabe
     def ausgabe_aufruf(self, code):
@@ -101,13 +101,13 @@ class Bildschirm():
         textbox_f.grid(row = 0, column = 2, sticky= "nsew")
         textbox_f.columnconfigure(0, weight = 1)
         textbox_f.rowconfigure(0, weight = 1)
-        
+
 # -----------------------------------------------------------
         # TEXT Eingabefeld
         self.eingabe_code_t = tb.Text(textbox_f, font=("Helvetica", 12), wrap = WORD, undo = True)  # wrap = WORD --> umbruch nur nach jedem Wort
         self.eingabe_code_t.config(background="#191919", highlightbackground="#191919", highlightcolor="#191919")
         self.eingabe_code_t.grid(row = 0, column= 0, sticky= "nsew")
-                                               
+
 # -----------------------------------------------------------
         # FRAME unten eingabe
         button_f = tb.Frame(eingabe_f)
@@ -191,7 +191,7 @@ class Bildschirm():
         self.ausgabe_aufruf("print('Ausgabe Programm')")
         zeilen_anzeige(self.eingabe_code_t, self.zeilenanzeige_t)
 
-        
+
 
 # ---------------------------------------------------------------------------------------------------------------------------
 app = Bildschirm() # Zuweisen der Klasse, init block starten

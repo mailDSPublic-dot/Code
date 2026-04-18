@@ -3,6 +3,10 @@ Das Programm bekommt einen String übergeben, zeigt den in einem neuen Fenster a
 Diese Eingabe wird dann zurückgegeben. Soll die Input-funktion immitieren.
 """
 
+import ttkbootstrap as tb
+
+from main_programms import globals
+
 def new_input(prompt: str):
     win = tb.Toplevel(globals.root)
 

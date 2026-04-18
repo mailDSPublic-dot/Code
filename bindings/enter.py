@@ -6,10 +6,10 @@ def enter(textfeld):
     einrückung = len(zeile) - len(zeile.lstrip()) # Gibt die Länge, aller Leerzeichen auf der linken seite zurück
 
     if zeile.rstrip().endswith(":"): # Wenn das letzte Zeichen abgesehen von leerzeichen ein ":" ist
-        textfeld.insert("insert", f"\n{(einrückung + 4) * " " }") # gibt einen zeilenumbruch und die einrückung + 4 Leerzeichen zurück
+        textfeld.insert("insert", "\n" + (" " * (einrückung + 4))) # gibt einen zeilenumbruch und die einrückung + 4 Leerzeichen zurück
         return "break" # Damit nicht nochmal umgebrochen wird
     
     elif einrückung > 0:
-        textfeld.insert("insert", f"\n{einrückung * " "}") # Gibt die einrückung der Aktuellen Zeile an die nächste weiter
+        textfeld.insert("insert", "\n" + (" " * einrückung)) # Gibt die einrückung der Aktuellen Zeile an die nächste weiter
         
         return "break" # Damit nicht nochmal umgebrochen wird

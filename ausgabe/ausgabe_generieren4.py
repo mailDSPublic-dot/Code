@@ -1,20 +1,53 @@
 def ausgabe_generieren(eingabe, ausgabefeld_ki):
     import io
     import contextlib
+    import threading
+    import tkinter as tk
     from main_programms import globals
     import ttkbootstrap as tb
+    from ausgabe.new_input3 import new_input
+
     # Damit der Code nicht in irgendwo anderes angezeigt wird, wird er abgefangen.
     stdout = io.StringIO() # Speichert den Output in eine Variable um(STanDartOUTput)
-    try:
+
+    def run_exec():
+        exec_globals = {
+            "__builtins__": __builtins__,
+            "__name__": "__main__",
+            "globals": globals,
+            "new_input": new_input,
+            "tb": tb,
+            "tk": tk,
+        }
+
         with contextlib.redirect_stdout(stdout): # Leitet den Output in stdout um
-            exec(eingabe, {"globals": globals, "tb":tb}) # führt den Code aus
-            yield stdout.getvalue(), None
-            return "fertig", None
+            exec(eingabe, exec_globals) # führt den Code aus
+
+    try:
+        # Tkinter-Code muss auf dem GUI-Hauptthread ausgeführt werden.
+        if threading.current_thread() is threading.main_thread() or globals.root is None:
+            run_exec()
+        else:
+            fertig = threading.Event()
+            fehler = [None]
+
+            def runner():
+                try:
+                    run_exec()
+                except Exception as exc:
+                    fehler[0] = exc
+                finally:
+                    fertig.set()
+
+            globals.root.after(0, runner)
+            fertig.wait()
+            if fehler[0] is not None:
+                raise fehler[0]
+
+        yield stdout.getvalue(), None
+        return "fertig", None
         
     except Exception as fehler: # Wenn ein Fehler entsteht
-        import threading
-
-        
         zeile = None # Zeile wird initialisiert
 
         try: # es wird probiert 
