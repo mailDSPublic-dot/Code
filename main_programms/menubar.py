@@ -3,7 +3,7 @@ def menubar(root, eingabe_code_t, prüfungsmodus):
     import main_programms.menubar_commands as menucom
     from lernen.fenster_lernen import level_weitergabe
     from lernen.ki_lernen import AI
-
+    from main_programms import globals
 
     def ki():
         ai = AI()
@@ -18,7 +18,9 @@ def menubar(root, eingabe_code_t, prüfungsmodus):
     file_menu.add_command(label = "Öffnen", command = lambda : menucom.oeffnen(eingabe_code_t))
     file_menu.add_command(label = "Speichern", command = lambda : menucom.speichern(eingabe_code_t))
     file_menu.add_command(label = "Speichern unter", command = lambda : menucom.speichern_unter(eingabe_code_t))
+    file_menu.add_command(label = "Beenden", command = globals.root.destroy)
     menubar.add_cascade(label = "File", menu = file_menu) # Anzeigen des File Menus auf der Menuleiste
+
 
 
     # Edit Menu
@@ -28,6 +30,7 @@ def menubar(root, eingabe_code_t, prüfungsmodus):
     edit_menu.add_command(label="Einfügen", command = lambda : menucom.paste(eingabe_code_t))
     edit_menu.add_command(label="Undo", command = lambda : menucom.undo(eingabe_code_t))
     edit_menu.add_command(label = "Redo", command = lambda : menucom.redo(eingabe_code_t))
+    
     menubar.add_cascade(label = "Edit", menu = edit_menu)
 
 
