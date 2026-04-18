@@ -32,6 +32,17 @@ def new_input(prompt: str):
 
     win.bind("<Return>", lambda e: bestaetigen())
 
+    win.update()
+    
+    window_width = win.winfo_width() # die größe vom Bildschirm und Fenster
+    window_height = win.winfo_height() # berechnen zu können, 
+    screenwidth = win.winfo_screenwidth() # um zu wissen, wo das Fenster 
+    screenheight = win.winfo_screenheight() # angezeigt werden soll
+    x_postion = int((screenwidth - window_width) // 2)
+    y_position = int((screenheight - window_height) // 2.5) # leicht über der mitte des Bildschirms 
+
+    win.geometry(f"{window_width}x{window_height}+{x_postion}+{y_position}") # wird das Fenster plaziert
+
     win.wait_window()
 
 
