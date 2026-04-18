@@ -1,2 +1,6 @@
 /build
 /GuidedCoding.spec
+
+__pycache__/
+env/
+dist_exe/
