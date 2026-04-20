@@ -10,12 +10,18 @@ def ausgabe(eingabe:str, ausgabe_programm, ausgabe_ki, eingabetextfeld):
     ausgabe_programm.config(state="disabled") # Setzt anschließen wieder auf Status: nicht bearbeitbar
     ausgabe_programm.update_idletasks() # Führt die Vorherigen Commands aus
 
+    ausgabe_ki.config(state="normal") # setzt den Status auf bearbeitbar
+    ausgabe_ki.delete(1.0, "end") # Löscht die vorherige Antwort
+    ausgabe_ki.insert(1.0, "Erklärung der KI") # Schreib einen Text damit der User weiß, dass die Ki läuft
+    ausgabe_ki.config(state="disabled") # Setzt anschließen wieder auf Status: nicht bearbeitbar
+    ausgabe_ki.update_idletasks() # Führt die Vorherigen Commands aus
+
 
 # ------------------------------------------------------------------------------------------------------------
     # Führt das Programm aus und gibt das Ergebnis/ die Fehlermeldung zurück
     def programm_ergebnis():
         nonlocal eingabe
-        
+
         eingabe = input_ersetzten(eingabe)
 
         for ausgabe, zeile in ausgabe_generieren(eingabe, ausgabe_ki):

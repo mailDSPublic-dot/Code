@@ -39,7 +39,7 @@ def run_test(inputs, expected_output, usercode):
     except:
         pass
 
-    if output == expected_output:
+    if output == expected_output.lower():
         return(True, None)
 
     else:
