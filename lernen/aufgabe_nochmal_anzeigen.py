@@ -3,11 +3,11 @@ def aufgabe_nochmal_anzeigen():
     from main_programms import globals
 
     win = tb.Toplevel(globals.root)
+    win.title(globals.aufgabe_name.capitalize())
 
     ausgabe_t = tb.Label(win, text = globals.aufgabe, background="#222222", foreground="#FFFFFF", font = ("Helvetica", 12))
     ausgabe_t.grid(row = 0, column = 0, padx = 20, pady = 10)
 
-    
 
     bestaetigen = tb.Button(win, text = "Bestätigen", command = win.destroy)
     bestaetigen.grid(row = 1, column = 0, pady = 20)

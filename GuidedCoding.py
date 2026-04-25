@@ -43,7 +43,6 @@ class Bildschirm():
         def refresh_theme(event=None):
             self.eingabe_code_t.config(background="#191919", highlightbackground="#191919", highlightcolor="#191919")
             self.zeilenanzeige_t.config(background="#191919", foreground="#777", highlightbackground="#191919", highlightcolor="#191919")
-            self.aufgabe.config(background="#222222", highlightbackground="#222222", highlightcolor="#222222", foreground="#FFFFFF")
             if globals.prüfungsmodus_an == True:
                 self.prüfungsmodus.config(background="#6F0000", highlightbackground="#6F0000", highlightcolor="#6F0000")
 
@@ -141,11 +140,7 @@ class Bildschirm():
         self.prüfungsmodus.config(background="#6F0000", highlightbackground="#6F0000", highlightcolor="#6F0000")
         menucom.prüfungsmodus(self.prüfungsmodus, 0)
 
-# -----------------------------------------------------------
-        # TEXT für die Aufgabe
-        self.aufgabe = tb.Text(button_f, font = ("Helvetica", 10), height=1, width=None)
-        self.aufgabe.config(background="#222222", highlightbackground="#222222", highlightcolor="#222222", foreground="#FFFFFF")
-        globals.aufgabe_name_t = self.aufgabe
+
 
 # ------------------------------------------------------------------------------------------------------------
         # FRAME für alle Ausgabefelder

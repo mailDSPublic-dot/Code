@@ -161,22 +161,30 @@ def tutorials():
 
 # ------------------------------------------------------------------------------------------------------------
 # Funktion aktiviert den Prüfungsmodus
-def prüfungsmodus(widget, status):
+def prüfungsmodus(prüfungsmodus_t, status):
     import threading, time, os, datetime
     from main_programms import globals
+    from time import sleep
+
 
     def worker(endzeit, config_dateipfad):
+        if globals.lernen_untermenu == None: # Wenn das Menu beim start noch nicht initiiert worde
+            sleep(0.01) # warte 10ms
+            worker(endzeit, config_dateipfad) # starte die funktion neu
+            return # beende die alte Funktion
+        
+        globals.lernen_untermenu.entryconfig(0, state= "disabled") # deaktiert die KI
+        globals.lernen_untermenu.entryconfig(1, state= "disabled") # deaktiviert das Lernen Untermenu
+
         datum = datetime.datetime.fromtimestamp(endzeit) # bekommt das koplette Datum
         uhrzeit = datum.strftime("%H:%M") # Nimmt nur die Stunden und die Minuten
 
         globals.prüfungsmodus_an = True # Setzt den Prüfungsmodus für alle Programme auf True
 
-        widget.grid(row = 0, column= 0, pady = 10, sticky= "w")
-        widget.delete(1.0, "end")
-        widget.insert("end", f"Prüfungsmodus bis {uhrzeit}Uhr")
-        widget.config(state = "disabled")
-
-        globals.menubar.entryconfig("Lernen", state = "disabled") # Disabled das lernen Menu
+        prüfungsmodus_t.grid(row = 0, column= 0, pady = 10, sticky= "w")
+        prüfungsmodus_t.delete(1.0, "end")
+        prüfungsmodus_t.insert("end", f"Prüfungsmodus bis {uhrzeit}Uhr")
+        prüfungsmodus_t.config(state = "disabled")
 
         with open(config_dateipfad, "w") as file: # legt eine neue Datei an
             file.write(str(endzeit)) # in welche reingeschrieben bis wann der Prüfungsmodus geht
@@ -190,7 +198,7 @@ def prüfungsmodus(widget, status):
             pass
 
         globals.prüfungsmodus_an = False # setzt den globalen Prüfungsmudus auf aus
-        widget.grid_forget() # löscht die Anzeige für den Prüfungsmodus
+        prüfungsmodus_t.grid_forget() # löscht die Anzeige für den Prüfungsmodus
 
     datei_ordner = os.path.dirname(os.path.abspath(__file__)) # der order des aktuellen files
     config_dateipfad = os.path.join(datei_ordner, "config.txt") # der Pfadname zu einer "config.txt" Datei im Ordner

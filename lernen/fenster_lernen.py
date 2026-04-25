@@ -12,17 +12,10 @@ def level_weitergabe(string, status):
         globals.aufgabe = erklärungen(string)
         lösung = None
 
-    def button(lösung:str):
-        aufgabe_t = globals.aufgabe_name_t
-
-        aufgabe_t.config(state = "normal", width = (len(lösung)+ 9))
-        aufgabe_t.delete(1.0, "end")
-        aufgabe_t.insert("end", f"Aufgabe: {lösung.capitalize()}")
-        aufgabe_t.config(state = "disabled", width = (len(lösung)+ 9))
-        aufgabe_t.grid(row = 0, column= 0, pady = 10, sticky= "w")
-
+    def button(lösung):
         globals.aufgabe_prüfen_b.grid(row = 0, column= 1, pady = 10, padx = 12, sticky= "e")
         globals.aufgabe_anzeigen_b.grid(row = 0, column = 0, sticky = "e")
+        globals.aufgabe_name = lösung
 
         win.destroy()
     

@@ -1,8 +1,9 @@
 prüfungsmodus_an = False
 anfrage = False
 menubar = None
+lernen_untermenu = None
 aufgabe = None
-aufgabe_name_t = None
+aufgabe_name = None
 aufgabe_prüfen_b = None
 aufgabe_anzeigen_b = None
 fenster = []

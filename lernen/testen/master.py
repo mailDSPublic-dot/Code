@@ -14,13 +14,11 @@ def master(code, ausgabe_ki_t):
             ausgabe_ki_t.insert("end", f"Der Test wurde bestanden!")
             globals.aufgabe_prüfen_b.grid_forget()
             globals.aufgabe_anzeigen_b.grid_forget()
-            globals.aufgabe_name_t.grid_forget()
-            
+
         ausgabe_ki_t.config(state = "disabled")
 
 
-    aufgabe = str(globals.aufgabe_name_t.get(1.0, "end"))
-    aufgabe = aufgabe[9:].lower().strip()
+    aufgabe = globals.aufgabe_name_t
     
     inputs, erwartet = rückgabe_modul(aufgabe)
     if inputs != False: # Wenn es inputs gibt
