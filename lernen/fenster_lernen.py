@@ -4,15 +4,16 @@ def level_weitergabe(string, status):
     from lernen.erklärungen import erklärungen
     from lernen.aufgaben import aufgaben
     from math import ceil
+    import main_programms.globals as globals
+
     if status == "a": # aufgabe
-        ausgabe, lösung = aufgaben(string) # Speichert den Text der Angezeigt werden soll
+        globals.aufgabe, lösung = aufgaben(string) # Speichert den Text der Angezeigt werden soll
     elif status == "e": # erklärungen
-        ausgabe = erklärungen(string)
+        globals.aufgabe = erklärungen(string)
         lösung = None
 
     def button(lösung:str):
-        import main_programms.globals as globals
-        aufgabe_t = globals.aufgabe_widget
+        aufgabe_t = globals.aufgabe_name_t
 
         aufgabe_t.config(state = "normal", width = (len(lösung)+ 9))
         aufgabe_t.delete(1.0, "end")
@@ -20,7 +21,8 @@ def level_weitergabe(string, status):
         aufgabe_t.config(state = "disabled", width = (len(lösung)+ 9))
         aufgabe_t.grid(row = 0, column= 0, pady = 10, sticky= "w")
 
-        globals.prüfen_widget.grid(row = 0, column= 1, pady = 10, padx = 12, sticky= "e")
+        globals.aufgabe_prüfen_b.grid(row = 0, column= 1, pady = 10, padx = 12, sticky= "e")
+        globals.aufgabe_anzeigen_b.grid(row = 0, column = 0, sticky = "e")
 
         win.destroy()
     
@@ -60,7 +62,7 @@ def level_weitergabe(string, status):
     text_l = tb.Text(win, font = ("Helvetica", 12))
     text_l.config(width=60, wrap="word", background="#222222", highlightbackground="#222222", highlightcolor="#222222")
     text_l.pack(padx=20, pady=10)
-    text_l.insert("end", ausgabe)
+    text_l.insert("end", globals.aufgabe)
 
     text_l.bind("<KeyRelease>", lambda: resize_text(text_l))
     win.update()

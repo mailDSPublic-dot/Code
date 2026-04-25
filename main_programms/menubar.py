@@ -66,14 +66,14 @@ def menubar(root, eingabe_code_t, prüfungsmodus):
 
     komplexe_aufgaben_menu = tb.Menu(lernen_menu, tearoff = 0)
     komplexe_aufgaben_menu.add_command(label = "Anleitung", command = lambda : level_weitergabe("Anleitung", "a"))
-    komplexe_aufgaben_menu.add_command(label = "Gerade oder ungerade", command = lambda : level_weitergabe("Gerade oder ungerade", "a"))
     komplexe_aufgaben_menu.add_command(label = "Begrüßung", command = lambda : level_weitergabe("Begrüßung", "a"))
     komplexe_aufgaben_menu.add_command(label = "Alterskontrolle", command = lambda : level_weitergabe("Alterskontrolle", "a"))
+    komplexe_aufgaben_menu.add_command(label = "Gerade oder ungerade", command = lambda : level_weitergabe("Gerade oder ungerade", "a"))
     komplexe_aufgaben_menu.add_command(label = "Login", command = lambda : level_weitergabe("Passwort abfrage", "a"))
-    komplexe_aufgaben_menu.add_command(label = "Summe bis n", command = lambda : level_weitergabe("Summe bis n", "a"))
     komplexe_aufgaben_menu.add_command(label = "Notenrechner", command = lambda : level_weitergabe("Notenrechner", "a"))
+    komplexe_aufgaben_menu.add_command(label = "Summe bis n", command = lambda : level_weitergabe("Summe bis n", "a"))
     komplexe_aufgaben_menu.add_command(label = "Vielfache von 3 und 5", command = lambda : level_weitergabe("Vielfache von 3 und 5", "a"))
-    komplexe_aufgaben_menu.add_command(label = "Gerade Fibinacci-Zahlen", command = lambda : level_weitergabe("Gerade Fibonacci-Zahlen", "a"))
+    komplexe_aufgaben_menu.add_command(label = "Gerade Fibonacci-Zahlen", command = lambda : level_weitergabe("Gerade Fibonacci-Zahlen", "a"))
     komplexe_aufgaben_menu.add_command(label = "Wörter zählen", command = lambda : level_weitergabe("Wörter zählen", "a"))
 
 

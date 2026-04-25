@@ -14,6 +14,7 @@ from bindings.fokus_nicht_eingabe import fokus_nicht_eingabe
 from bindings.fokus_eingabe import fokus_eingabe
 from bindings.zeilen_anzeige import zeilen_anzeige
 from lernen.testen.master import master
+from lernen.aufgabe_nochmal_anzeigen import aufgabe_nochmal_anzeigen
 
 
 
@@ -126,7 +127,12 @@ class Bildschirm():
 # -----------------------------------------------------------
         # BUTTON zum prüfen ob die Lösung einer Aufgabe richtig ist
         prüfen_b = tb.Button(button_f, text = "Aufgabe prüfen", command = lambda: master(self.eingabe_code_t.get(1.0, "end"), self.ausgabe_ki_t))
-        globals.prüfen_widget = prüfen_b
+        globals.aufgabe_prüfen_b = prüfen_b
+
+# -----------------------------------------------------------
+        # Button zum Anzeigen der Aufgabe
+        aufgabe_anzeigen_b = tb.Button(button_f, text = "Aufgabe nochmal anzeigen", command = aufgabe_nochmal_anzeigen)
+        globals.aufgabe_anzeigen_b = aufgabe_anzeigen_b
 
 # -----------------------------------------------------------
         # TEXT für den Prüfungsmodus
@@ -139,7 +145,7 @@ class Bildschirm():
         # TEXT für die Aufgabe
         self.aufgabe = tb.Text(button_f, font = ("Helvetica", 10), height=1, width=None)
         self.aufgabe.config(background="#222222", highlightbackground="#222222", highlightcolor="#222222", foreground="#FFFFFF")
-        globals.aufgabe_widget = self.aufgabe
+        globals.aufgabe_name_t = self.aufgabe
 
 # ------------------------------------------------------------------------------------------------------------
         # FRAME für alle Ausgabefelder
