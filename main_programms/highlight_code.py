@@ -1,13 +1,14 @@
 """
 Das Programm bekommt ein Text-widget übergeben und highlightet dann verschiedene keywörter
 """
-
 def highlight_code(textfeld):
     # Einer Obergruppe wird eine Farbe zugewiesen
     farb_definition = {"control_flow":"#AD0068",
-                "definitions":"#988900",
+                "definitions":"#003D98",
                 "logics":"#7B00FF",
-                "imports":"#007E67",
+                "imports":"#890059",
+                "class":"#00B24A",
+                "functions":"#BAAB00",
                 "values":"#9F3A00",
                 "returns":"#CC0000",
                 "builtin_funktions":"#AA0000",
@@ -21,12 +22,14 @@ def highlight_code(textfeld):
     # Definieren der Keywörter und zuweisen zu einem Oberbegriff in einem Dictionary
     listen = {
     "control_flow" : ["if", "else", "elif", "for", "while", "try", "except", "finally", "with"],
-    "definitions" : ["def","class", "lambda", "global"],
+    "definitions" : ["def","class"],
     "logics" : ["and", "or", "not", "is", "in"],
-    "imports" : ["import", "as", "from"],
+    "imports" : [ "import", "as", "from"],
+    "class" : [],
+    "functions" : [],
     "values" : ["True", "False", "None"],
     "returns" : ["return", "break", "pass"],
-    "builtin_funktions" : ["print", "len", "open", "min", "max", "input", "dir", "enumerate", "eval", "exec", "format", "round"],
+    "builtin_funktions" : ["print", "len", "open", "min", "max", "input", "dir", "enumerate", "eval", "exec", "format", "round", "lambda", "global"],
     "builtin_typs" : ["type", "int", "str", "list", "set", "dict", "tupel", "bool", "float", "range"],
     "exceptions" : ["Exception", "ValueError", "TypeError", "KeyError", "indexError", "RuntimeError", "ZeroDivisionError"],
     "comment" : ["#"],
@@ -56,6 +59,35 @@ def highlight_code(textfeld):
     
     textfeld.tag_remove("error_line", "1.0", "end")
 
+    # die markierung von den namen der imports
+    def imports(woerter_liste):
+        as_gefunden = input_gefunden = False # es wurde noch kein as und kein input gefunden
+        for wort in woerter_liste: # für jedes wort in dieser zeile
+            if wort == "from": # wenn es from ist, 
+                continue # keine markierung(wird vorher gesetzt genau wie bei import und as)
+            elif wort == "as": # wenn as gefunden wurde
+                as_gefunden = True # setzte as_gefunden auf True
+            elif wort == "import": # wenn import gefunden wurde
+                input_gefunden = True # setzte import_gefunden auf True
+            elif as_gefunden: # wenn as gefunden wurde
+                listen["functions"].append(wort) # wird das aktuelle wort den funktionen hinzugefügt
+            elif input_gefunden: # wenn input gefunden wurde
+                listen["functions"].append(wort) # wird das aktuelle wort den funktionen hinzugefügt
+            else: # sonst
+                listen["class"].append(wort) # wird das aktuelle wort den importierten modulen hinzugefügt
+    
+
+    def definitions(woerter_liste):
+        for index, wort in enumerate(woerter_liste):
+            if wort == "class":
+                try: listen["class"].append(woerter_liste[index+1]) # fügt das nächste wort den klassen hinzu
+                except: pass
+            if wort == "def":
+                try: listen["functions"].append(woerter_liste[index+1])
+                except: pass
+
+
+            
 
 #--------------------------------------------------------------------------------------------
 
@@ -127,6 +159,10 @@ def highlight_code(textfeld):
     for zeile, string in enumerate(zeilen, start=1): # für jede Zeile in zeilen speichere den Inhalt in String
         woerter_liste, start_index_liste, end_index_liste = woerter_trennen(string, zeile) # gib den string und die Zeilennummer an woerter_trennen
         for index, wort in enumerate(woerter_liste): # für jeden eintrag in der Woerterliste speichere die Eintragsnummer in index und den Eintrag in Wort
+            if wort in listen["imports"]: # Wenn ein Import stattfindet
+                imports(woerter_liste) # rufe die import funktion auf
+            if wort in listen["definitions"]:
+                definitions(woerter_liste)
             for name in farb_definition: # Für jeden Eintrag von farbdefinition
                 if wort in listen[name]: # wenn das einer der Listen ist
                     textfeld.tag_add(f"{name}", start_index_liste[index], end_index_liste[index]) # färbe das Wort von start_index bis end_index in der Farbe der jeweiligen Farbe von Farbdefinition
