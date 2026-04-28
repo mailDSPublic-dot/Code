@@ -161,8 +161,8 @@ def highlight_code(textfeld):
         for index, wort in enumerate(woerter_liste): # für jeden eintrag in der Woerterliste speichere die Eintragsnummer in index und den Eintrag in Wort
             if wort in listen["imports"]: # Wenn ein Import stattfindet
                 imports(woerter_liste) # rufe die import funktion auf
-            if wort in listen["definitions"]:
-                definitions(woerter_liste)
+            if wort in listen["definitions"]: # wenn class oder def in der zeile ist
+                definitions(woerter_liste) # rufe die definitions funktion auf
             for name in farb_definition: # Für jeden Eintrag von farbdefinition
                 if wort in listen[name]: # wenn das einer der Listen ist
                     textfeld.tag_add(f"{name}", start_index_liste[index], end_index_liste[index]) # färbe das Wort von start_index bis end_index in der Farbe der jeweiligen Farbe von Farbdefinition

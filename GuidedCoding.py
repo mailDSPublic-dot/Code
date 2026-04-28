@@ -6,6 +6,7 @@ import main_programms.menubar_commands as menucom
 from main_programms.highlight_code import highlight_code
 from main_programms.menubar import menubar
 from main_programms.on_close import on_close
+from main_programms.update import update
 from main_programms import globals
 from bindings.tabulator import tabulator
 from bindings.enter import enter
@@ -24,9 +25,7 @@ class Bildschirm():
         bildpfad = self.resource_path("Logo.png")
         img = Image.open(bildpfad)
 
-
-
-
+        
 # ------------------------------------------------------------------------------------------------------------
         #Hauptbildschirm anpassen
         self.root = tb.Window(themename="darkly") # Dem Fenster das Thema darkly zuweisen
@@ -192,6 +191,7 @@ class Bildschirm():
         self.ausgabe_aufruf("print('Ausgabe Programm')")
         zeilen_anzeige(self.eingabe_code_t, self.zeilenanzeige_t)
 
+        update()
 
 
 # ---------------------------------------------------------------------------------------------------------------------------
