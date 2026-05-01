@@ -165,9 +165,18 @@ def prüfungsmodus(prüfungsmodus_t, status):
     import threading, time, os, datetime
     from main_programms import globals
     from time import sleep
+    variablen = {}
+    datei_ordner = os.path.dirname(os.path.abspath(__file__)) # der order des aktuellen files
+    config_dateipfad = os.path.join(datei_ordner, "config.txt") # der Pfadname zu einer "config.txt" Datei im Ordner
+    
 
+    def aktualisiere_datei():
+        with open(config_dateipfad, "w") as f:
+            for key, value in variablen.items():
+                f.write(f"{key} = {value}\n")
 
     def worker(endzeit, config_dateipfad):
+        nonlocal variablen
         if globals.lernen_untermenu == None: # Wenn das Menu beim start noch nicht initiiert worde
             sleep(0.01) # warte 10ms
             worker(endzeit, config_dateipfad) # starte die funktion neu
@@ -186,34 +195,39 @@ def prüfungsmodus(prüfungsmodus_t, status):
         prüfungsmodus_t.insert("end", f"Prüfungsmodus bis {uhrzeit}Uhr")
         prüfungsmodus_t.config(state = "disabled")
 
-        with open(config_dateipfad, "w") as file: # legt eine neue Datei an
-            file.write(str(endzeit)) # in welche reingeschrieben bis wann der Prüfungsmodus geht
+        variablen["pruefungsmodus"] = endzeit
+        aktualisiere_datei()
 
         while time.time() < endzeit: # solgange die aktuelle zeit vor der endzeit ist
             time.sleep(1) # schlafe eine Sekunde
 
-        try:
-            os.remove(config_dateipfad) # lösche die datei, wo der Prüfungsmodus eingetragen wurde
-        except:
-            pass
+        try: 
+            del variablen["pruefungsmodus"]
+            aktualisiere_datei()
+        except: pass
+            
 
         globals.prüfungsmodus_an = False # setzt den globalen Prüfungsmudus auf aus
         prüfungsmodus_t.grid_forget() # löscht die Anzeige für den Prüfungsmodus
 
-    datei_ordner = os.path.dirname(os.path.abspath(__file__)) # der order des aktuellen files
-    config_dateipfad = os.path.join(datei_ordner, "config.txt") # der Pfadname zu einer "config.txt" Datei im Ordner
-    
+
     if os.path.exists(config_dateipfad): # wenn die datei schon existiert
-        with open(config_dateipfad, "r") as f: # öffne sie lesend
-            file = f.read().strip() # speichere den eintrag
-            endzeit = float(file) # wandle in eine Kommazahl um
-            if endzeit < time.time(): # wenn die Zeit kleiner als die aktuelle ist
-                os.remove(f) # lösche die Datei
-                return
-            
-    else: # wenn die Datei nicht existiert
-        if status == 0: # Wenn die Funktion zum status 0 (Anfang) geöffnet wurde
-            return # mache nichts, da man nur guckt, ob der Prüfungsmodus in den letzten 12 Stunden angelegt wurde
+        with open(config_dateipfad, "r", encoding="utf-8") as f: # öffne sie lesend
+            exec(f.read(), {}, variablen)
+
+            if "pruefungsmodus" in variablen:
+                endzeit = float(variablen["pruefungsmodus"]) # wandle in eine Kommazahl um
+
+                if endzeit < time.time(): # wenn die Zeit kleiner als die aktuelle ist
+                    del variablen["pruefungsmodus"]
+                    aktualisiere_datei()
+                    return
+            else:
+                if status == 0:
+                    return
+                zeit_gerade = time.time() # bekomme die aktuelle zeit
+                endzeit = zeit_gerade + 43200 # berechne die endzeit (Zeit gerade + 12 Stunden)
+    else:
         zeit_gerade = time.time() # bekomme die aktuelle zeit
         endzeit = zeit_gerade + 43200 # berechne die endzeit (Zeit gerade + 12 Stunden)
 

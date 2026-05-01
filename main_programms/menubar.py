@@ -80,7 +80,7 @@ def menubar(root, eingabe_code_t, prüfungsmodus):
     lernen_menu.add_command(label = "KI zum Lernen", command = ki)
 
     lernen_menu.add_cascade(label = "Lernen", menu = lernen_untermenu)
-    lernen_menu.add_cascade(label = "Komplexe Aufgabe", menu = komplexe_aufgaben_menu)
+    lernen_menu.add_cascade(label = "Aufgaben", menu = komplexe_aufgaben_menu)
 
     menubar.add_cascade(label = "Lernen", menu = lernen_menu)
 

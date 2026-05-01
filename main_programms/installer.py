@@ -101,6 +101,14 @@ class main():
             tag_name = data["tag_name"]
 
             subprocess.run(["setx", "version_guidedcoding", tag_name], shell=True)
+            import ctypes
+            import win32con
+
+            HWND_BROADCAST = 0xFFFF
+            WM_SETTINGCHANGE = win32con.WM_SETTINGCHANGE
+
+            ctypes.windll.user32.SendMessageW(HWND_BROADCAST, WM_SETTINGCHANGE, 0, "Environment")
+
 
 
             self.verknüpfung_erstellen(
@@ -133,7 +141,6 @@ class main():
         # GUI
         # ---------------------------------------------------------
     def gui(self):
-            
         self.root = tk.Window(themename="darkly")
         self.root.title("Installer für GuidedCoding")
 
@@ -172,8 +179,3 @@ class main():
         self.update_timer()
 
         self.root.mainloop()
-
-
-if __name__ == "__main__":
-    fenster = main()
-    fenster.gui()
