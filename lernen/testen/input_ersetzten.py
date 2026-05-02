@@ -5,10 +5,10 @@ def input_ersetzten(programm:str, inputs):
     count = 0
     input_count = 0
     def get_eingabe():
+        nonlocal input_count
         if isinstance(inputs, list): 
             return inputs[input_count]
         return inputs
-
 
     for zeile in zeilen:
         if "input(" in zeile:

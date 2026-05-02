@@ -32,6 +32,7 @@ def master(code, ausgabe_ki_t):
             insert_antwort(None, None) # Gib aus, das der Test bestanden wurde
 
         else: # wenn es keine Liste ist
+            eingabe = inputs
             richtig, ausgabe = run_test(eingabe, ausgabe, code)
             if not richtig:
                 insert_antwort(ausgabe, None)

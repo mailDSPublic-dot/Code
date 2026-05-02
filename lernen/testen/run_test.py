@@ -9,7 +9,7 @@ def run_test(inputs, expected_output, usercode):
     try:
         code = input_ersetzten(usercode, inputs) # Ersetzt input mit den variablen
     except Exception as e:
-        return f"Bitte nur {len(inputs)} inputs() verwenden.", e # Gibt den Fehler zurück
+        return False, f"Bitte nur {len(inputs)} inputs() verwenden." # Gibt den Fehler zurück
 
     def run_python(code: str):
         buffer = io.StringIO() # definiert als variable
@@ -28,16 +28,11 @@ def run_test(inputs, expected_output, usercode):
 
 
     output = run_python(code) # speichert die Rückgabe
-    try:
-        output = output.strip()
-    except:
-        pass
+    try: output = output.strip()
+    except: pass
 
-
-    try:
-        output = output.lower()
-    except:
-        pass
+    try: output = output.lower()
+    except: pass
 
     if output == expected_output.lower():
         return(True, None)

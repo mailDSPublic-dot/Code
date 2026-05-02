@@ -45,7 +45,7 @@ def ausgabe_generieren(eingabe, ausgabefeld_ki):
                 raise fehler[0]
 
         yield stdout.getvalue(), None
-        return "fertig", None
+        yield "fertig", None
         
     except Exception as fehler: # Wenn ein Fehler entsteht
         zeile = None # Zeile wird initialisiert
@@ -54,7 +54,7 @@ def ausgabe_generieren(eingabe, ausgabefeld_ki):
             zeile = fehler.lineno # die Zeile auszulesen
         except:
             pass
-        
+
         yield fehler, zeile # Es wird der Fehler und die Zeile zurückgegen
 
         def ki_aufruf(fehler):
@@ -91,7 +91,7 @@ def ausgabe_generieren(eingabe, ausgabefeld_ki):
         thread = threading.Thread(target = ki_aufruf, args = (fehler,), daemon = True)
         thread.start()
 
-        return "fertig", None
+        yield "fertig", None
         
 
 
